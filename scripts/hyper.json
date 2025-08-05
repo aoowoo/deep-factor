@@ -1,0 +1,68 @@
+{
+  "common": {
+    "data_path": "data/10_Crypto_4h_indicators.csv",
+    "results_dir": "results",
+    "save_dir": "patch",
+    "initial_amount": 1000000,
+    "transaction_cost_pct": 0.001,
+    "window_length": 8,
+    "reward_scaling": 100,
+    "short_stoploss_percent": 0.1,
+    "make_short": false
+  },
+  "train": {
+    "train_start_date": "2021-01-01 00:00:00",
+    "train_end_date": "2023-12-31 00:00:00",
+    "n_envs": 16,
+    "total_timesteps": 10000000
+  },
+  "ppo": {
+    "n_steps": 128,
+    "learning_rate": 0.0001,
+    "batch_size": 1024,
+    "clip_range": 0.2,
+    "gamma": 0.93,
+    "gae_lambda": 0.95,
+    "n_epochs": 8,
+    "exploration_intensity": 0.7
+  },
+  "optimizer": {
+    "weight_decay": 0.01,
+    "eps": 1e-5
+  },
+  "test": {
+    "test_start_date": "2024-01-01 00:00:00",
+    "test_end_date": "2024-12-31 00:00:00",
+    "model_path": "patch/crypto_model.zip"
+  },
+  "model": {
+    "last_activation": "tanh",
+    "latent_dim_pi": 128,
+    "latent_dim_vf": 128,
+    "policy_net": {
+      "lstm_hidden_size": 64,
+      "lstm_num_layers": 2,
+      "dropout": 0.1
+    },
+    "critic_net": {
+      "embedding_dim": 64,
+      "indicator_lstm": {
+        "hidden_size": 32,
+        "num_layers": 1
+      },
+      "assets_spatio": {
+        "hidden_dim": 64,
+        "kernel_size": 2,
+        "layers": 3
+      },
+      "assets_transformer": {
+        "n_heads": 8,
+        "d_k": 8,
+        "d_v": 8,
+        "d_ff": 128,
+        "d_layers": 1
+      },
+      "dropout": 0.1
+    }
+  }
+}
